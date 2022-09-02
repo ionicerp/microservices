@@ -1,13 +1,13 @@
 name: Deploy Service Order to GCP Run on merge
 on:
   push:
-    # paths:
-    #   - "service-order/**"
+    paths:
+      - "service-order/**"
     branches:
       - main
 jobs:
-  deploy:
-    name: Setup Gcloud Account
+  build_deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
     defaults:
       run:
