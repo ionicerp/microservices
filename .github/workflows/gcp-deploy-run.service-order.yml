@@ -1,8 +1,8 @@
 name: Deploy Service Order to GCP Run on merge
 on:
   push:
-    paths:
-      - "service-order/**"
+    # paths:
+    #   - "service-order/**"
     branches:
       - main
 jobs:
@@ -10,6 +10,7 @@ jobs:
     name: Setup Gcloud Account
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - id: "auth"
         uses: "google-github-actions/auth@v0"
         with:
