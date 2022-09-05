@@ -1,0 +1,150 @@
+# openapi2-functions.yaml
+swagger: "2.0"
+info:
+  title: Product Functions
+  description: API Gateway For Product Functions
+  version: 1.0.0
+basePath: /v1
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /pdf-generator:
+    post:
+      summary: Generate PDF Document
+      operationId: pdf-generator 
+      x-google-backend:
+        address: https://pdf-generator-6b6yfpthva-uc.a.run.app/v1
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+  /quotation:
+    post:
+      summary: Create Quotation
+      operationId: create-quotation
+      x-google-backend:
+        address: https://product-6b6yfpthva-uc.a.run.app/v1
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+    put:
+      summary: Update Quotation
+      operationId: update-quotation
+      x-google-backend:
+        address: https://product-6b6yfpthva-uc.a.run.app/v1
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+  /quotation/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: Id of the quotation.
+      summary: Get Quotation
+      operationId: get-quotation
+      x-google-backend:
+        address: https://product-6b6yfpthva-uc.a.run.app/v1
+        path_translation: CONSTANT_ADDRESS
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+  /quotation/get_by:
+    post:
+      summary: List Quotation
+      operationId: list-quotation
+      x-google-backend:
+        address: https://product-6b6yfpthva-uc.a.run.app/v1/get_by
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+  # /product:
+  #   post:
+  #     summary: Create Product
+  #     operationId: create-product
+  #     x-google-backend:
+  #       address: https://product-6b6yfpthva-uc.a.run.app/v1
+  #     produces:
+  #       - application/json
+  #     responses:
+  #       "200":
+  #         description: OK
+  #   put:
+  #     summary: Update Product
+  #     operationId: update-product
+  #     x-google-backend:
+  #       address: https://product-6b6yfpthva-uc.a.run.app/v1
+  #     produces:
+  #       - application/json
+  #     responses:
+  #       "200":
+  #         description: OK
+  # /product/{id}:
+  #   get:
+  #     parameters:
+  #       - in: path
+  #         name: id
+  #         type: string
+  #         required: true
+  #         description: Id of the product.
+  #     summary: Get Product
+  #     operationId: get-product
+  #     x-google-backend:
+  #       address: https://product-6b6yfpthva-uc.a.run.app/v1
+  #       path_translation: CONSTANT_ADDRESS
+  #     produces:
+  #       - application/json
+  #     responses:
+  #       "200":
+  #         description: OK
+  #   delete:
+  #     parameters:
+  #       - in: path
+  #         name: id
+  #         type: string
+  #         required: true
+  #         description: Id of the product.
+  #     summary: Delete Product
+  #     operationId: delete-product
+  #     x-google-backend:
+  #       address: https://product-6b6yfpthva-uc.a.run.app/v1
+  #       path_translation: CONSTANT_ADDRESS
+  #     produces:
+  #       - application/json
+  #     responses:
+  #       "200":
+  #         description: OK
+  # /product/get_by:
+  #   post:
+  #     summary: List Product
+  #     operationId: list-product
+  #     x-google-backend:
+  #       address: https://product-6b6yfpthva-uc.a.run.app/v1/get_by
+  #     produces:
+  #       - application/json
+  #     responses:
+  #       "200":
+  #         description: OK
+securityDefinitions:
+  firebase:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "https://securetoken.google.com/com-b2allsolution-autolive"
+    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+    x-google-audiences: "com-b2allsolution-autolive"
+security:
+  - firebase: []
