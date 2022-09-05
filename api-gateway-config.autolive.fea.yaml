@@ -21,51 +21,51 @@ paths:
       responses:
         "200":
           description: OK
-  /quotation:
+  /quote:
     post:
-      summary: Create Quotation
-      operationId: create-quotation
+      summary: Create Quote
+      operationId: create-quote
       x-google-backend:
-        address: https://quotation-laltjze22a-uc.a.run.app/v1
+        address: https://quote-laltjze22a-uc.a.run.app/v1
       produces:
         - application/json
       responses:
         "200":
           description: OK
     put:
-      summary: Update Quotation
-      operationId: update-quotation
+      summary: Update Quote
+      operationId: update-quote
       x-google-backend:
-        address: https://quotation-laltjze22a-uc.a.run.app/v1
+        address: https://quote-laltjze22a-uc.a.run.app/v1
       produces:
         - application/json
       responses:
         "200":
           description: OK
-  /quotation/{id}:
+  /quote/{id}:
     get:
       parameters:
         - in: path
           name: id
           type: string
           required: true
-          description: Id of the quotation.
-      summary: Get Quotation
-      operationId: get-quotation
+          description: Id of the quote.
+      summary: Get Quote
+      operationId: get-quote
       x-google-backend:
-        address: https://quotation-laltjze22a-uc.a.run.app/v1
+        address: https://quote-laltjze22a-uc.a.run.app/v1
         path_translation: CONSTANT_ADDRESS
       produces:
         - application/json
       responses:
         "200":
           description: OK
-  /quotation/get_by:
+  /quote/get_by:
     post:
-      summary: List Quotation
-      operationId: list-quotation
+      summary: List Quote
+      operationId: list-quote
       x-google-backend:
-        address: https://quotation-laltjze22a-uc.a.run.app/v1/get_by
+        address: https://quote-laltjze22a-uc.a.run.app/v1/get_by
       produces:
         - application/json
       responses:
