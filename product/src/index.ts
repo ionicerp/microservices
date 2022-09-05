@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(authenticate());
 
-app.use('/v1/product', v1);
+app.use('/v1', v1);
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {

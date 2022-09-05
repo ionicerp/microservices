@@ -8,7 +8,7 @@
     "build": "npx tsc",
     "start": "node dist/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
-    "deploy": "npm run lint && gcloud run deploy product --source . --region us-central1 --no-allow-unauthenticated --ingress=all --cpu=1 --memory=128Mi"
+    "deploy": "gcloud run deploy product --source . --region us-central1 --no-allow-unauthenticated --ingress=all --cpu=1 --memory=128Mi"
   },
   "keywords": [],
   "author": "",

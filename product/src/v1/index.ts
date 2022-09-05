@@ -14,8 +14,8 @@ router.post('/', async (req, res) => {
 });
 
 // read 1
-router.get('/:id', async (req, res) => {
-  const id = req.params.id;
+router.get('/', async (req, res) => {
+  const id = req.query.id;
   try {
     res.status(200).send({ message: 'Product v1 read 1 success', status: 'success', data: { id: id } });
   } catch (error: any) {
@@ -47,8 +47,8 @@ router.put('/', async (req, res) => {
 });
 
 // delete
-router.delete('/:id', async (req, res) => {
-  const id = req.params.id;
+router.delete('/', async (req, res) => {
+  const id = req.query.id;
   try {
     res.status(200).send({ message: 'Product v1 delete success', status: 'success', data: { id: id } });
   } catch (error: any) {

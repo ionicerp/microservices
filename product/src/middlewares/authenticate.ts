@@ -36,9 +36,10 @@ export const authenticate = () => async (req: Request, res: Response, next: Next
       //   throw new Error('uuid is not found');
       // }
     }
+    next();
   } catch (error) {
+    res.sendStatus(401);
     console.error(error);
   }
 
-  next();
 };
