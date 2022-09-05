@@ -1,5 +1,5 @@
 {
-  "name": "quotation",
+  "name": "quote",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "build": "npx tsc",
     "start": "node dist/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
-    "deploy": "gcloud run deploy quotation --source . --region us-central1 --no-allow-unauthenticated --ingress=all --cpu=1 --memory=128Mi"
+    "deploy": "gcloud run deploy quote --source . --region us-central1 --no-allow-unauthenticated --ingress=all --cpu=1 --memory=128Mi"
   },
   "keywords": [],
   "author": "",
