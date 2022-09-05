@@ -3,15 +3,13 @@ import * as admin from 'firebase-admin';
 
 export const buildQueryFirestore = (firestoreQuery: IFirestoreQuery) => {
   const query = admin.firestore().collection(firestoreQuery.collection!);
-  if (firestoreQuery.filter && firestoreQuery.filter.length > 0) {
-    firestoreQuery.filter.forEach((filter) => {
+  if (firestoreQuery.filters && firestoreQuery.filters.length > 0) {
+    firestoreQuery.filters.forEach((filter) => {
       query.where(filter.field, filter.operator, filter.value);
     });
   }
-  if (firestoreQuery.order && firestoreQuery.order.length > 0) {
-    firestoreQuery.order.forEach((order: any) => {
-      query.orderBy(order.field, order.direction);
-    });
+  if (firestoreQuery.order) {
+    query.orderBy(firestoreQuery.order.field, firestoreQuery.order.direction);
   }
   if (firestoreQuery.limit) {
     query.limit(firestoreQuery.limit);

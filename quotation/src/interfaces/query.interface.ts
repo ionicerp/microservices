@@ -2,8 +2,8 @@ import * as admin from 'firebase-admin';
 
 export interface IFirestoreQuery {
   collection?: string;
-  filter?: Array<IFirestoreQueryFilter>;
-  order?: Array<IFirestoreQueryOrder>;
+  filters?: Array<IFirestoreQueryFilter>;
+  order?: IFirestoreQueryOrder;
   limit?: number;
   start_at?: any;
   start_after?: any;
@@ -19,5 +19,5 @@ export interface IFirestoreQueryFilter {
 
 export interface IFirestoreQueryOrder {
   field: string;
-  direction: string;
+  direction: admin.firestore.OrderByDirection;
 }
