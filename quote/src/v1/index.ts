@@ -9,7 +9,7 @@ const router = Router();
 router.post('/', async (req, res) => {
   const body = req.body;
   try {
-    const result = await admin.firestore().collection('quotations').add({ ...body, added_on: new Date() });
+    const result = await admin.firestore().collection('quotes').add({ ...body, added_on: new Date() });
     res.status(200).send({ message: 'Created', status: 'success', data: { id: result.id } });
   } catch (error: any) {
     console.error(error);
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
   try {
-    const result = await admin.firestore().collection('quotations').doc(id).get();
+    const result = await admin.firestore().collection('quotes').doc(id).get();
     res.status(200).send({ message: 'success', status: 'success', data: { ...result.data(), id: result.id } });
   } catch (error: any) {
     console.error(error);
@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
 router.post('/get_by', async (req, res) => {
   const body: IFirestoreQuery = req.body;
   try {
-    const result = await buildQueryFirestore({ ...body, collection: 'quotations' }).get();
+    const result = await buildQueryFirestore({ ...body, collection: 'quotes' }).get();
     res.status(200).send({ message: 'success', status: 'success', data: result.docs });
   } catch (error: any) {
     console.error(error);
@@ -45,7 +45,7 @@ router.post('/get_by', async (req, res) => {
 router.put('/', async (req, res) => {
   const body = req.body;
   try {
-    await admin.firestore().collection('quotations').doc(body.id).update(body);
+    await admin.firestore().collection('quotes').doc(body.id).update(body);
     res.status(200).send({ message: 'Updated', status: 'success' });
   } catch (error: any) {
     console.error(error);
