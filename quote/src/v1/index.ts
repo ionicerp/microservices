@@ -18,8 +18,8 @@ router.post('/', async (req, res) => {
 });
 
 // read 1
-router.get('/:id', async (req, res) => {
-  const id = req.params.id;
+router.get('/', async (req, res) => {
+  const id = req.query.id as string;
   try {
     const result = await admin.firestore().collection('quotes').doc(id).get();
     res.status(200).send({ message: 'success', status: 'success', data: { ...result.data(), id: result.id } });
