@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 
 const router = Router();
 
@@ -30,7 +30,7 @@ const router = Router();
 
 
 // create
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const body = req.body;
   try {
     res.status(200).send({ message: 'success', status: 'success', data: body });
@@ -41,8 +41,8 @@ router.post('/', async (req, res) => {
 });
 
 // read 1
-router.get('/:id', async (req, res) => {
-  const id = req.params.id;
+router.get('/', async (req: Request, res: Response) => {
+  const id = req.query.id as string;
   try {
     res.status(200).send({ message: 'success', status: 'success', data: { id: id } });
   } catch (error: any) {
@@ -52,7 +52,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // read many
-router.post('/get_by', async (req, res) => {
+router.post('/get_by', async (req: Request, res: Response) => {
   const body = req.body;
   try {
     res.status(200).send({ message: 'success', status: 'success', data: body });
@@ -63,7 +63,7 @@ router.post('/get_by', async (req, res) => {
 });
 
 // update
-router.put('/', async (req, res) => {
+router.put('/', async (req: Request, res: Response) => {
   const body = req.body;
   try {
     res.status(200).send({ message: 'success', status: 'success', data: body });
@@ -74,8 +74,8 @@ router.put('/', async (req, res) => {
 });
 
 // delete
-router.delete('/:id', async (req, res) => {
-  const id = req.params.id;
+router.delete('/', async (req: Request, res: Response) => {
+  const id = req.query.id as string;
   try {
     res.status(200).send({ message: 'success', status: 'success', data: { id: id } });
   } catch (error: any) {
