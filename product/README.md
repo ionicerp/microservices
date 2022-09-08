@@ -20,11 +20,26 @@ This is a skeleton for a microservice using Express.
 ## Running in Docker
 
 ### Build the image
-```
-docker build -t image_name .
+```cmd
+docker build -t product-ms-image .
 ```
 
 ### Run the container
+```cmd
+docker run -d --name product-ms-container -p 8080:8080 product-ms-image
 ```
-docker run -d --name container_name -p 8080:8080 image_name
+
+### Run container in kubernetes
+```cmd
+kubectl apply -f deployment.yaml
+```
+
+### Stop the container in kubernetes
+```cmd
+kubectl delete deployment product-ms-deployment
+```
+
+### View running kubectl
+```
+kubectl get all
 ```
