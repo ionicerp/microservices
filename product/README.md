@@ -17,35 +17,14 @@ This is a skeleton for a microservice using Express.
 
 - Run `npm run dev`
 
-## Create new repo with this skeleton
+## Running in Docker
 
-### Clone the skeleton repository
+### Build the image
 ```
-git clone https://github.com/gorden0929/microservice-skeleton.git <new_name>
-cd microservice-skeleton
-```
-
-### Go to [Github](https://github.com/) and create a new empty repository
-
-### Change git remote origin
-```
-git remote remove origin
-git remote add origin https://github.com/<username/organization>/<repository_name>.git
+docker build -t image_name .
 ```
 
-### checkout without previous history
+### Run the container
 ```
-git checkout --orphan main
-```
-
-### add and commit existing file
-
-```
-git add .
-git commit -m "Initial commit"
-```
-
-### push to remote
-```
-git push -u origin main
+docker run -d --name container_name -p 8080:8080 image_name
 ```
