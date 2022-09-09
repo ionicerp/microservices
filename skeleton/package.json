@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .ts . --fix",
-    "build": "npx tsc",
-    "start": "node dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+    "build": "tsc -p tsconfig.json",
+    "start": "node ./dist/index.js",
+    "dev": "nodemon --watch ./src --ext ts --exec ts-node ./src/index.ts",
     "deploy": "gcloud run deploy service --source . --region us-central1 --no-allow-unauthenticated --ingress=all --cpu=1 --memory=128Mi"
   },
   "keywords": [],
@@ -28,7 +28,6 @@
     "@types/node": "^18.7.14",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
-    "concurrently": "^7.3.0",
     "eslint": "^8.23.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.26.0",

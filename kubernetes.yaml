@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: product-ms-deployment
+  name: account-ms-deployment
   labels:
-    app: product-ms
+    app: account-ms
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: product-ms
+      app: account-ms
   template:
     metadata:
       labels:
-        app: product-ms
+        app: account-ms
     spec:
       containers:
-        - name: product-ms
-          image: product-ms-image
+        - name: account-ms
+          image: account-ms-image
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
@@ -24,10 +24,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-ms-service
+  name: account-ms-service
 spec:
   selector:
-    app: product-ms
+    app: account-ms
   type: LoadBalancer
   ports:
     - protocol: TCP
