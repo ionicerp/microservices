@@ -2,7 +2,7 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "${_IMAGE_NAME}", "-f", "./Dockerfile", "."]
 substitutions:
-  _SERVICE: product
+  _SERVICE: pdf-generator
   _REPO_NAME: microservices
   _PROJECT_ID: com-b2allsolution-autolive
   _LOCATION: us-central1

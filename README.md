@@ -23,3 +23,13 @@ gcloud artifacts docker images list <LOCATION>-docker.pkg.dev/<PROJECT>/<REPOSIT
 ```
 gcloud artifacts docker images list us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices --include-tags
 ```
+
+### Combine kubernetes manifests
+```
+kubectl kustomize . -o kubernetes-manifests.yaml
+```
+
+### Deploy to Kubernetes
+```
+kubectl apply -f kubernetes-manifests.yaml
+```
