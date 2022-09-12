@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/product', '-f', './Dockerfile', '.' ]
+images: ['us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/product']
+tags: ['latest']
