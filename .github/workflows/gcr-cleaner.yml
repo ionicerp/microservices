@@ -10,12 +10,16 @@ jobs:
   gcr-cleaner:
     runs-on: "ubuntu-latest"
     steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
       # configure based on your registry
-      - uses: "google-github-actions/auth@v0"
+      - name: "Login with credentials"
+        uses: "google-github-actions/auth@v0"
         with:
           credentials_json: "${{ secrets.GCR_CLEANER_CREDENTIAL }}"
 
-      - name: "Set up Cloud SDK"
+      - name: "Set up gcloud"
         uses: "google-github-actions/setup-gcloud@v0"
 
       # customize based on the gcr-cleaner flags
@@ -23,4 +27,4 @@ jobs:
         with:
           args: >-
             -repo=us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices
-            -keep=3
+            -keep=1
