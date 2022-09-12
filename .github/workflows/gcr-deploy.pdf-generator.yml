@@ -1,8 +1,8 @@
-name: Deploy API Gateway to GCP Run on merge
+name: Deploy PDF Generator to GCR on merge
 on:
   push:
     paths:
-      - "api-gateway/**"
+      - "pdf-generator/**"
     branches:
       - main
 jobs:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./api-gateway
+        working-directory: ./pdf-generator
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3

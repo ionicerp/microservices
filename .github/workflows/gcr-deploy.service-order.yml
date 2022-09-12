@@ -1,8 +1,8 @@
-name: Deploy PDF Generator to GCP Run on merge
+name: Deploy Service Order to GCR on merge
 on:
   push:
     paths:
-      - "pdf-generator/**"
+      - "service-order/**"
     branches:
       - main
 jobs:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./pdf-generator
+        working-directory: ./service-order
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3

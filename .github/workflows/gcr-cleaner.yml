@@ -1,0 +1,26 @@
+# .github/workflows/gcr-cleaner.yml
+name: "gcr-cleaner"
+
+on:
+  schedule:
+    - cron: "0 0 */1 * *" # runs daily
+  workflow_dispatch: # allows for manual invocation
+
+jobs:
+  gcr-cleaner:
+    runs-on: "ubuntu-latest"
+    steps:
+      # configure based on your registry
+      - uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.GCR_CLEANER_CREDENTIAL }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v0"
+
+      # customize based on the gcr-cleaner flags
+      - uses: "docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli"
+        with:
+          args: >-
+            -repo=us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices
+            -keep=3
