@@ -1,5 +1,5 @@
 # .github/workflows/gcr-cleaner.yml
-name: 'gcr-cleaner'
+name: 'GCR Cleaner'
 
 on:
   schedule:
@@ -10,6 +10,9 @@ jobs:
   gcr-cleaner:
     runs-on: 'ubuntu-latest'
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       # configure based on your registry
       - id: "auth"
         name: Authenticate to Google Cloud
