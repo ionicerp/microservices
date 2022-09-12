@@ -1,6 +1,5 @@
 name: Deploy pdf-generator to GCR on merge
 on:
-  workflow_dispatch: # allows for manual invocation
   push:
     paths:
       - pdf-generator/**
@@ -18,7 +17,7 @@ jobs:
       INGRESS: all
     defaults:
       run:
-        working-directory: ./$SERVICE_NAME
+        working-directory: ./${{env.SERVICE_NAME}}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
@@ -38,9 +37,9 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: >-
-          gcloud run deploy $SERVICE_NAME
-          --image $LOCATION-docker.pkg.dev/${{env.PROJECT_ID}}/microservices/$SERVICE_NAME
-          --region $LOCATION 
-          --cpu $CPU
-          --memory $MEMORY 
-          --ingress $INGRESS
+          gcloud run deploy ${{env.SERVICE_NAME}} 
+          --image ${{env.LOCATION}}-docker.pkg.dev/${{env.PROJECT_ID}}/microservices/${{env.SERVICE_NAME}}
+          --region ${{env.LOCATION}} 
+          --cpu ${{env.CPU}} 
+          --memory ${{env.MEMORY}} 
+          --ingress ${{env.INGRESS}}
