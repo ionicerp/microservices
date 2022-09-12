@@ -45,3 +45,4 @@ jobs:
           --cpu ${{env.CPU}} 
           --memory ${{env.MEMORY}} 
           --ingress ${{env.INGRESS}}
+          --no-allow-unauthenticated
