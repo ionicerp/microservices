@@ -1,5 +1,6 @@
 name: Deploy pdf-generator to GCR on merge
 on:
+  workflow_dispatch: # allows for manual invocation
   push:
     paths:
       - pdf-generator/**
