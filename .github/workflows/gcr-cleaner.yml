@@ -21,4 +21,7 @@ jobs:
       - uses: 'docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli'
         with:
           args: >-
-            -repo=us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/product
+            -repo=us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices
+            -repo=us-central1-docker.pkg.dev/com-b2allsolution-autolive/cloud-run-source-deploy
+            -recursive=true
+            -keep=2
