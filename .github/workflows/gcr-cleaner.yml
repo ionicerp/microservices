@@ -27,4 +27,3 @@ jobs:
         with:
           args: >-
             -repo=us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices
-            -keep=1
