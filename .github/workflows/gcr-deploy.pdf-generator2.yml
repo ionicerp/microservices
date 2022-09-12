@@ -13,7 +13,7 @@ jobs:
     env:
       SERVICE_NAME: pdf-generator
       CPU: 1
-      MEMORY: 128Mi
+      MEMORY: 2Gi
       LOCATION: us-central1
       PROJECT: com-b2allsolution-autolive
       INGRESS: all
