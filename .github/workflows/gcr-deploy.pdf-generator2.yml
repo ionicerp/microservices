@@ -15,6 +15,7 @@ jobs:
       CPU: 1
       MEMORY: 128Mi
       LOCATION: us-central1
+      PROJECT_ID: com-b2allsolution-autolive
       INGRESS: all
     defaults:
       run:
