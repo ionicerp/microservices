@@ -19,11 +19,9 @@ jobs:
         with:
           credentials_json: "${{ secrets.GCR_CLEANER_CREDENTIAL }}"
 
-      - name: "Set up gcloud"
-        uses: "google-github-actions/setup-gcloud@v0"
-
       # customize based on the gcr-cleaner flags
       - uses: "docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli"
         with:
           args: >-
+            -repo=us-central1-docker.pkg.dev/com-b2allsolution-autolive/cloud-run-source-deploy
             -repo=us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices
