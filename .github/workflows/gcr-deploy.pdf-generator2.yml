@@ -15,7 +15,7 @@ jobs:
       CPU: 1
       MEMORY: 128Mi
       LOCATION: us-central1
-      PROJECT_ID: com-b2allsolution-autolive
+      PROJECT: com-b2allsolution-autolive
       INGRESS: all
     defaults:
       run:
@@ -40,7 +40,7 @@ jobs:
       - name: Deploy to Cloud Run
         run: >-
           gcloud run deploy ${{env.SERVICE_NAME}} 
-          --image ${{env.LOCATION}}-docker.pkg.dev/${{env.PROJECT_ID}}/microservices/${{env.SERVICE_NAME}}
+          --image ${{env.LOCATION}}-docker.pkg.dev/${{env.PROJECT}}/microservices/${{env.SERVICE_NAME}}
           --region ${{env.LOCATION}} 
           --cpu ${{env.CPU}} 
           --memory ${{env.MEMORY}} 
