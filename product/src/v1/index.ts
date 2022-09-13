@@ -5,7 +5,7 @@ const router = express.Router();
 // create
 router.post('/', async (req, res) => {
   const body = req.body;
-  try {
+  try {    
     res.status(200).send({ message: 'Product v1 create success', status: 'success', data: body });
   } catch (error: any) {
     console.error(error);

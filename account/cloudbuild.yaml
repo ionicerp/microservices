@@ -1,0 +1,13 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "${_IMAGE_NAME}", "-f", "./Dockerfile", "."]
+substitutions:
+  _SERVICE: account
+  _REPO_NAME: microservices
+  _PROJECT_ID: com-b2allsolution-autolive
+  _LOCATION: us-central1
+  _IMAGE_NAME: "${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE}"
+options:
+    dynamic_substitutions: true
+images: ["${_IMAGE_NAME}"]
+tags: ["latest"]

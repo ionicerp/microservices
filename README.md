@@ -24,6 +24,7 @@ gcloud run deploy <SERVICE_NAME> --image <REGION>-docker.pkg.dev/<PROJECT_ID>/<R
 
 ```
 gcloud run deploy product --image us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/product --tag latest
+gcloud run deploy account --image us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/account --tag latest
 ```
 
 ### List image from Artifact Registry

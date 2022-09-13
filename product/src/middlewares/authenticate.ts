@@ -1,7 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
 
 export const authenticate = () => async (req: Request, res: Response, next: NextFunction) => {
+  let url = 'https://product-6b6yfpthva-uc.a.run.app';
+  if (process.env.NON_GOOGLE_ENV) {
+    url = 'http://localhost:5050';
+  }
+  const client = new OAuth2Client(url);
   const authHeader = req.headers.authorization;
   try {
     if (!authHeader) {
@@ -11,35 +16,44 @@ export const authenticate = () => async (req: Request, res: Response, next: Next
     if (authType.toLowerCase() !== 'bearer') {
       throw new Error('Invalid authorization type');
     }
-    const jwtPayload = jwt.decode(creds, {
-      json: true,
-    });
+    //   const jwtPayload = jwt.decode(creds, {
+    //     json: true,
+    //   });
+    //   console.log(jwtPayload);
 
-    if (jwtPayload && jwtPayload.exp && jwtPayload.iat && jwtPayload.aud && jwtPayload.iss && jwtPayload.sub) {
-      // exp must be future time
-      if (jwtPayload.exp < Date.now() / 1000) {
-        throw new Error('Token expired');
-      }
-      // iat must past time
-      if (jwtPayload.iat > Date.now() / 1000) {
-        throw new Error('Token not yet valid');
-      }
-      // aud must be project id
-      // if (jwtPayload.aud !== projectId) {
-      //   throw new Error('Token not for this project');
-      // }
-      // iss must be https://securetoken.google.com/<projectId>
-      if (jwtPayload.iss !== 'https://accounts.google.com') {
-        throw new Error('Token not for this project');
-      }
-      // if (!jwtPayload.sub) {
-      //   throw new Error('uuid is not found');
-      // }
-    }
+    //   if (jwtPayload && jwtPayload.exp && jwtPayload.iat && jwtPayload.aud && jwtPayload.iss && jwtPayload.sub) {
+    //     // exp must be future time
+    //     if (jwtPayload.exp < Date.now() / 1000) {
+    //       throw new Error('Token expired');
+    //     }
+    //     // iat must past time
+    //     console.log(Date.now() / 1000);
+
+
+    //     if (jwtPayload.iat >= Date.now() / 1000) {
+    //       throw new Error('Token not yet valid');
+    //     }
+    //     // aud must be project id
+    //     // if (jwtPayload.aud !== projectId) {
+    //     //   throw new Error('Token not for this project');
+    //     // }
+    //     // iss must be https://securetoken.google.com/<projectId>
+    //     if (jwtPayload.iss !== 'https://accounts.google.com') {
+    //       throw new Error('Token not for this project');
+    //     }
+    //     // if (!jwtPayload.sub) {
+    //     //   throw new Error('uuid is not found');
+    //     // }
+    //     next();
+    //   }
+
+    await client.verifyIdToken({
+      idToken: creds,
+      audience: 'http://localhost:5050',
+    });
     next();
   } catch (error) {
     res.sendStatus(401);
     console.error(error);
   }
-
 };

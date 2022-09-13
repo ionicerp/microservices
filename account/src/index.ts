@@ -13,7 +13,7 @@ app.use(authenticate());
 
 app.use('/v1', v1);
 
-const port = process.env.PORT || 5050;
+const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
