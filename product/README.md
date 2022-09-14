@@ -1,45 +1,27 @@
-# Microservice Express Skeleton
-
-This is a skeleton for a microservice using Express.
+# Product Microservice.
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js
-
 ### Installing
 
-- Clone the repository
-- Run `npm install`
-
-### Running
-
-- Run `npm run dev`
-
-## Running in Docker
-
-### Build the image
-```cmd
-docker build -t product-ms-image .
+```
+git clone https://github.com/ionicerp/microservices.git
 ```
 
-### Run the container
-```cmd
-docker run -d --name product-ms-container -p 8080:8080 product-ms-image
+### Run Locally
+
+```bash
+cd microservices/product
+npm install
+npm run dev
 ```
 
-### Run container in kubernetes
-```cmd
-kubectl apply -f deployment.yaml
-```
+## How to use
 
-### Stop the container in kubernetes
-```cmd
-kubectl delete deployment product-ms-deployment
-```
+Change package.json name and script deploy service name
 
-### View running kubectl
+### Deploy to Cloud Run
+
 ```
-kubectl get all
+npm run deploy
 ```
