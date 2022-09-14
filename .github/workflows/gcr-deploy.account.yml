@@ -1,9 +1,9 @@
-name: Deploy product to GCR on merge
+name: Deploy account to GCR on merge
 on:
   workflow_dispatch: # allows for manual invocation
   push:
     paths:
-      - product/**
+      - account/**
     branches:
       - main
 jobs:
@@ -11,7 +11,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
-      SERVICE_NAME: product
+      SERVICE_NAME: account
       CPU: 1
       MEMORY: 128Mi
       LOCATION: us-central1

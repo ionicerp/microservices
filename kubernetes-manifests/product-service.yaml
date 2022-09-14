@@ -21,35 +21,35 @@ spec:
       containers:
         - name: server
           securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - all
-          privileged: false
-          readOnlyRootFilesystem: true
-          image: product-service
+          # allowPrivilegeEscalation: false
+          # capabilities:
+          #   drop:
+          #     - all
+          # privileged: false
+          # readOnlyRootFilesystem: true
+          image: us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/product
           ports:
             - containerPort: 3035
           env:
             - name: PORT
               value: "3035"
-          resource:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 500m
-              memory: 256Mi
-            # readinessProbe:
-            #   initialDelaySeconds: 20
-            #   periodSeconds: 15
-            #   exec:
-            #     command: ["/bin/grpc_health_probe", "-addr=:9555"]
-            # livenessProbe:
-            #   initialDelaySeconds: 20
-            #   periodSeconds: 15
-            #   exec:
-            #     command: ["/bin/grpc_health_probe", "-addr=:9555"]
+          # resource:
+          #   requests:
+          #     cpu: 100m
+          #     memory: 128Mi
+          #   limits:
+          #     cpu: 500m
+          #     memory: 256Mi
+          #   readinessProbe:
+          #     initialDelaySeconds: 20
+          #     periodSeconds: 15
+          #     exec:
+          #       command: ["/bin/grpc_health_probe", "-addr=:9555"]
+          #   livenessProbe:
+          #     initialDelaySeconds: 20
+          #     periodSeconds: 15
+          #     exec:
+          #       command: ["/bin/grpc_health_probe", "-addr=:9555"]
 ---
 apiVersion: v1
 kind: Service

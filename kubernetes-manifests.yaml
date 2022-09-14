@@ -38,33 +38,20 @@ spec:
         app: account-service
     spec:
       containers:
-      - allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-          - all
-        env:
+      - env:
         - name: PORT
           value: "3030"
         image: account-service
         name: server
         ports:
         - containerPort: 3030
-        privileged: false
-        readOnlyRootFilesystem: true
-        resource:
-          limits:
-            cpu: 500m
-            memory: 256Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
         securityContext: null
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-      serviceAccountName: account-service
+      serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
 apiVersion: apps/v1
@@ -81,31 +68,18 @@ spec:
         app: product-service
     spec:
       containers:
-      - allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-          - all
-        env:
+      - env:
         - name: PORT
           value: "3035"
         image: product-service
         name: server
         ports:
         - containerPort: 3035
-        privileged: false
-        readOnlyRootFilesystem: true
-        resource:
-          limits:
-            cpu: 500m
-            memory: 256Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
         securityContext: null
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-      serviceAccountName: product-service
+      serviceAccountName: default
       terminationGracePeriodSeconds: 5
