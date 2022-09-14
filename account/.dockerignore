@@ -15,7 +15,14 @@ yarn-error.log*
 ## Dependency directories
 node_modules/
 
+## eslint
+.eslintcache
+.eslintrc.js
+
 # git
 .git
 .gitattributes
 .gitignore
+
+# cloud build
+cloudbuild.yaml
