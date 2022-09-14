@@ -11,4 +11,6 @@ COPY . .
 
 RUN npm run build
 
-ENTRYPOINT [ "npm", "start" ]
+EXPOSE 3000
+
+CMD [ "npm", "start" ]

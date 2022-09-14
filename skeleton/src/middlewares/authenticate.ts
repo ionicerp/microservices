@@ -3,39 +3,17 @@ import * as jwt from 'jsonwebtoken';
 
 export const authenticate = () => async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    res.status(401).send({ message: 'No authorization header', status: 'error' });
+    return;
+  }
+  const [authType, creds] = authHeader.split(' ');
+  if (authType.toLowerCase() !== 'bearer') {
+    res.status(401).send({ message: 'Invalid authorization type', status: 'error' });
+    return;
+  }
   try {
-    if (!authHeader) {
-      throw new Error('No authorization header');
-    }
-    const [authType, creds] = authHeader.split(' ');
-    if (authType.toLowerCase() !== 'bearer') {
-      throw new Error('Invalid authorization type');
-    }
-    const jwtPayload = jwt.decode(creds, {
-      json: true,
-    });
-
-    if (jwtPayload && jwtPayload.exp && jwtPayload.iat && jwtPayload.aud && jwtPayload.iss && jwtPayload.sub) {
-      // exp must be future time
-      if (jwtPayload.exp < Date.now() / 1000) {
-        throw new Error('Token expired');
-      }
-      // iat must past time
-      if (jwtPayload.iat > Date.now() / 1000) {
-        throw new Error('Token not yet valid');
-      }
-      // aud must be project id
-      // if (jwtPayload.aud !== projectId) {
-      //   throw new Error('Token not for this project');
-      // }
-      // iss must be https://securetoken.google.com/<projectId>
-      if (jwtPayload.iss !== 'https://accounts.google.com') {
-        throw new Error('Token not for this project');
-      }
-      // if (!jwtPayload.sub) {
-      //   throw new Error('uuid is not found');
-      // }
-    }
+    // const decodedToken = jwt.verify(creds, process.env.JWT_SECRET!);
     next();
   } catch (error: any) {
     console.error(error);

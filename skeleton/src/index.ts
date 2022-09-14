@@ -1,21 +1,21 @@
 import express from 'express';
 import cors from 'cors';
-import { v1 } from './v1';
 import 'dotenv/config';
 import { authenticate } from './middlewares/authenticate';
-import * as admin from 'firebase-admin';
+import { v1Routes } from './routes/v1.routes';
 
-admin.initializeApp();
 const app = express();
 
 app.use(cors({ origin: true }));
-app.use(express.json());
+
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 app.use(authenticate());
 
-app.use('/v1', v1);
+app.use('/v1', v1Routes);
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
