@@ -5,8 +5,8 @@ metadata:
 spec:
   ports:
   - name: grpc
-    port: 3001
-    targetPort: 3001
+    port: 3030
+    targetPort: 3030
   selector:
     app: account-service
   type: ClusterIP
@@ -18,8 +18,8 @@ metadata:
 spec:
   ports:
   - name: grpc
-    port: 3002
-    targetPort: 3002
+    port: 3035
+    targetPort: 3035
   selector:
     app: product-service
   type: ClusterIP
@@ -27,11 +27,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: account-service
   name: account-service
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: account-service
@@ -41,19 +38,40 @@ spec:
         app: account-service
     spec:
       containers:
-      - image: account-service
+      - allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - all
+        env:
+        - name: PORT
+          value: "3030"
+        image: account-service
         name: server
         ports:
-        - containerPort: 3001
+        - containerPort: 3030
+        privileged: false
+        readOnlyRootFilesystem: true
+        resource:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext: null
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccountName: account-service
+      terminationGracePeriodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: product-service
   name: product-service
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: product-service
@@ -63,7 +81,31 @@ spec:
         app: product-service
     spec:
       containers:
-      - image: product-service
+      - allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - all
+        env:
+        - name: PORT
+          value: "3035"
+        image: product-service
         name: server
         ports:
-        - containerPort: 3002
+        - containerPort: 3035
+        privileged: false
+        readOnlyRootFilesystem: true
+        resource:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext: null
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccountName: product-service
+      terminationGracePeriodSeconds: 5

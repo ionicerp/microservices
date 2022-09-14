@@ -2,10 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: account-service
-  labels:
-    app: account-service
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: account-service
@@ -14,11 +11,45 @@ spec:
       labels:
         app: account-service
     spec:
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 5
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
         - name: server
+          securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - all
+          privileged: false
+          readOnlyRootFilesystem: true
           image: account-service
           ports:
-            - containerPort: 3001
+            - containerPort: 3030
+          env:
+            - name: PORT
+              value: "3030"
+          resource:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            # readinessProbe:
+            #   initialDelaySeconds: 20
+            #   periodSeconds: 15
+            #   exec:
+            #     command: ["/bin/grpc_health_probe", "-addr=:9555"]
+            # livenessProbe:
+            #   initialDelaySeconds: 20
+            #   periodSeconds: 15
+            #   exec:
+            #     command: ["/bin/grpc_health_probe", "-addr=:9555"]
 ---
 apiVersion: v1
 kind: Service
@@ -30,5 +61,5 @@ spec:
     app: account-service
   ports:
     - name: grpc
-      port: 3001
-      targetPort: 3001
+      port: 3030
+      targetPort: 3030
