@@ -18,6 +18,8 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
+      imagePullSecrets:
+        - name: artifact-registry
       containers:
         - name: server
           securityContext:
@@ -27,7 +29,7 @@ spec:
           #     - all
           # privileged: false
           # readOnlyRootFilesystem: true
-          image: us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/account
+          image: us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/account:latest
           ports:
             - containerPort: 3030
           env:

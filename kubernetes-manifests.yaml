@@ -41,11 +41,13 @@ spec:
       - env:
         - name: PORT
           value: "3030"
-        image: account-service
+        image: us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/account:latest
         name: server
         ports:
         - containerPort: 3030
         securityContext: null
+      imagePullSecrets:
+      - name: artifact-registry
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -71,11 +73,14 @@ spec:
       - env:
         - name: PORT
           value: "3035"
-        image: product-service
+        image: us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/product:latest
+        imagePullPolicy: Always
         name: server
         ports:
         - containerPort: 3035
         securityContext: null
+      imagePullSecrets:
+      - name: artifact-registry
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
