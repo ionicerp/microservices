@@ -30,6 +30,7 @@ spec:
           # privileged: false
           # readOnlyRootFilesystem: true
           image: us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/account:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 3030
           env:

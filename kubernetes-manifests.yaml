@@ -14,6 +14,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: loadbalancer
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: loadbalancer
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: product-service
 spec:
   ports:
@@ -42,6 +54,7 @@ spec:
         - name: PORT
           value: "3030"
         image: us-central1-docker.pkg.dev/com-b2allsolution-autolive/microservices/account:latest
+        imagePullPolicy: Always
         name: server
         ports:
         - containerPort: 3030
@@ -88,3 +101,18 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-external
+spec:
+  rules:
+  - host: mynodeapp.com
+    http:
+      paths:
+      - backend:
+          serviceName: account-service
+          servicePort: 3030
+        path: /account
+        pathType: Prefix
