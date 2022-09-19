@@ -4,24 +4,12 @@ metadata:
   name: account-service
 spec:
   ports:
-  - name: grpc
-    port: 3030
+  - port: 3030
+    protocol: TCP
     targetPort: 3030
   selector:
-    app: account-service
+    app: account
   type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: loadbalancer
-spec:
-  ports:
-  - port: 80
-    targetPort: 3000
-  selector:
-    app: loadbalancer
-  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
@@ -29,25 +17,26 @@ metadata:
   name: product-service
 spec:
   ports:
-  - name: grpc
-    port: 3035
+  - port: 3035
+    protocol: TCP
     targetPort: 3035
   selector:
-    app: product-service
+    app: product
   type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: account-service
+  name: account
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: account-service
+      app: account
   template:
     metadata:
       labels:
-        app: account-service
+        app: account
     spec:
       containers:
       - env:
@@ -58,29 +47,23 @@ spec:
         name: server
         ports:
         - containerPort: 3030
-        securityContext: null
       imagePullSecrets:
       - name: artifact-registry
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
       serviceAccountName: default
-      terminationGracePeriodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: product-service
+  name: product
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: product-service
+      app: product
   template:
     metadata:
       labels:
-        app: product-service
+        app: product
     spec:
       containers:
       - env:
@@ -91,28 +74,43 @@ spec:
         name: server
         ports:
         - containerPort: 3035
-        securityContext: null
       imagePullSecrets:
       - name: artifact-registry
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
       serviceAccountName: default
-      terminationGracePeriodSeconds: 5
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
   name: ingress-external
 spec:
+  ingressClassName: nginx
   rules:
-  - host: mynodeapp.com
-    http:
+  - http:
       paths:
       - backend:
-          serviceName: account-service
-          servicePort: 3030
-        path: /account
+          service:
+            name: account-service
+            port:
+              number: 3030
+        path: /account(/|$)(.*)
         pathType: Prefix
+      - backend:
+          service:
+            name: product-service
+            port:
+              number: 3035
+        path: /product(/|$)(.*)
+        pathType: Prefix
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  annotations:
+    nginx.ingressclass.kubernetes.io/is-default-class: "true"
+  labels:
+    app.kubernetes.io/component: controller
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx

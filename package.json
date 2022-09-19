@@ -1,0 +1,23 @@
+{
+  "name": "microservices",
+  "version": "1.0.0",
+  "description": "```\r gcloud config set project <project-id>\r ```",
+  "main": "index.js",
+  "scripts": {
+    "build": "kubectl kustomize . -o kubernetes-manifests.yaml",
+    "start": "npm run build && kubectl apply -f kubernetes-manifests.yaml",
+    "del": "kubectl delete -f kubernetes-manifests.yaml",
+    "restart": "npm run del && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionicerp/microservices.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ionicerp/microservices/issues"
+  },
+  "homepage": "https://github.com/ionicerp/microservices#readme"
+}

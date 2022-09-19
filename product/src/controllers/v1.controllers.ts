@@ -12,7 +12,7 @@ export const createData = (req: Request, res: Response) => {
 
 export const getData = (req: Request, res: Response) => {
   try {
-    const id = req.params.id
+    const id = req.query.id
     res.status(200).send({ message: 'getData', status: 'success', data: id });
   } catch (error: any) {
     console.error(error);
@@ -42,7 +42,7 @@ export const updateData = (req: Request, res: Response) => {
 
 export const deleteData = (req: Request, res: Response) => {
   try {
-    const id = req.params.id
+    const id = req.query.id
     res.status(200).send({ message: 'deleteData', status: 'success', data: id });
   } catch (error: any) {
     console.error(error);

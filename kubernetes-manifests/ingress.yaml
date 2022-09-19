@@ -1,69 +1,36 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: ingress-internal
-# spec:
-#   rules:
-#     - host: myservicea.foo.org
-#       http:
-#         paths:
-#           - path: /
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: internal
-#                 port:
-#                   number: 80
-#   ingressClassName: nginx
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: ingress-external
-# spec:
-#   rules:
-#     - host: myserviceb.foo.org
-#       http:
-#         paths:
-#           - path: /
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: external
-#                 port:
-#                   number: 80
-#   ingressClassName: nginx
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: ingress-external
-# spec:
-#   ingressClassName: nginx-example
-#   rules:
-#     - host: mynodeapp.com
-#       http:
-#         paths:
-#           - path: /account
-#             pathType: Prefix
-#             backend:
-#               serviceName: account-service
-#               servicePort: 3030
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+  name: nginx
+  annotations:
+    nginx.ingressclass.kubernetes.io/is-default-class: "true"
+spec:
+  controller: k8s.io/ingress-nginx
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minimal-ingress
+  name: ingress-external
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
-  ingressClassName: nginx-example
+  ingressClassName: nginx
   rules:
-  - http:
-      paths:
-      - path: /testpath
-        pathType: Prefix
-        backend:
-          service:
-            name: test
-            port:
-              number: 80
+    - http:
+        paths:
+          - path: /account(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: account-service
+                port:
+                  number: 3030
+          - path: /product(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: product-service
+                port:
+                  number: 3035

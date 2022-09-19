@@ -15,6 +15,11 @@ app.use(authenticate());
 
 app.use('/v1', v1Routes);
 
+// other res 
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
 const port = process.env.PORT || 3035;
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
