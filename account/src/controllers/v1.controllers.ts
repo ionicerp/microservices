@@ -1,9 +1,17 @@
 import { Request, Response } from 'express';
+import axios from 'axios';
 
-export const createData = (req: Request, res: Response) => {
+export const createData = async (req: Request, res: Response) => {
   try {
-    const body = req.body
-    res.status(200).send({ message: 'createData', status: 'success', data: body });
+    const body = req.body;
+    const result = await axios.post('http://product-service:3035/v1', body, {
+      'headers': {
+        'Content-Type': 'application/json',
+        'Authorization': req.headers.authorization!
+      },
+      responseType: 'json'
+    });
+    res.status(200).send({ message: 'createData', status: 'success', data: result.data.data });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ message: error.message, status: 'error', data: error });

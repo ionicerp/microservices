@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - kubernetes-manifests/account-service.yaml
   - kubernetes-manifests/product-service.yaml
-  - kubernetes-manifests/ingress.yaml
+  # - kubernetes-manifests/ingress.yaml

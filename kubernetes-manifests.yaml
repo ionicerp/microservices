@@ -9,7 +9,7 @@ spec:
     targetPort: 3030
   selector:
     app: account
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
@@ -22,14 +22,14 @@ spec:
     targetPort: 3035
   selector:
     app: product
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: account
 spec:
-  replicas: 1
+  replicas: 10
   selector:
     matchLabels:
       app: account
@@ -56,7 +56,7 @@ kind: Deployment
 metadata:
   name: product
 spec:
-  replicas: 1
+  replicas: 10
   selector:
     matchLabels:
       app: product
@@ -77,40 +77,3 @@ spec:
       imagePullSecrets:
       - name: artifact-registry
       serviceAccountName: default
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-  name: ingress-external
-spec:
-  ingressClassName: nginx
-  rules:
-  - http:
-      paths:
-      - backend:
-          service:
-            name: account-service
-            port:
-              number: 3030
-        path: /account(/|$)(.*)
-        pathType: Prefix
-      - backend:
-          service:
-            name: product-service
-            port:
-              number: 3035
-        path: /product(/|$)(.*)
-        pathType: Prefix
----
-apiVersion: networking.k8s.io/v1
-kind: IngressClass
-metadata:
-  annotations:
-    nginx.ingressclass.kubernetes.io/is-default-class: "true"
-  labels:
-    app.kubernetes.io/component: controller
-  name: nginx
-spec:
-  controller: k8s.io/ingress-nginx

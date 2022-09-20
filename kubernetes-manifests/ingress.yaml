@@ -18,7 +18,9 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - http:
+    - host: localhost
+      address: localhost
+      http:
         paths:
           - path: /account(/|$)(.*)
             pathType: Prefix
