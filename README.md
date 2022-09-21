@@ -49,6 +49,20 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80
 ```
 
+### Connect to cluster
+
+#### Windows
+
+```
+set KUBECONFIG=kubeconfig.yaml
+```
+
+#### Linux
+
+```
+export KUBECONFIG=kubeconfig.yaml
+```
+
 ### Combine kubernetes manifests
 
 ```
@@ -89,12 +103,14 @@ imagePullSecrets:
 kubectl apply -f kubernetes-manifests.yaml
 ```
 
-https://cloud.google.com/artifact-registry/docs/access-control#pullsecrets
-
-kubectl create secret docker-registry artifact-registry --docker-server=https://us-central1-docker.pkg.dev --docker-username=_json_key --docker-email=kube-micro@com-b2allsolution-autolive.iam.gserviceaccount.com --docker-password $(cat kube-micro.json)
-
 ### Clean up Kubernetes
 
 ```
 kubectl delete -f kubernetes-manifests.yaml
+```
+
+### Rollout and restart Kubernetes
+
+```
+kubectl rollout restart deployment <DEPLOYMENT>
 ```

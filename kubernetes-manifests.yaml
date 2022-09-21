@@ -29,7 +29,7 @@ kind: Deployment
 metadata:
   name: account
 spec:
-  replicas: 10
+  replicas: 5
   selector:
     matchLabels:
       app: account
@@ -56,7 +56,7 @@ kind: Deployment
 metadata:
   name: product
 spec:
-  replicas: 10
+  replicas: 5
   selector:
     matchLabels:
       app: product
